@@ -12,13 +12,38 @@ var cardFour = "queen";
 // 	alert("Sorry, try again.");
 // }
 var boardGame = document.getElementById('game-board');
+
+var cards = [cardOne, cardTwo, cardThree, cardFour];
+
+var cardsInPlay = [];
+
 var createrCards = function(x) {
 
 	for (var i = 0; i < x.length; i++) {
 		var newElement = document.createElement('div');
-		newElement[i].className = 'card';
+		newElement.className = 'card';
+
+		newElement.setAttribute('data-card', cards[i]);
+
+		newElement.addEventListener('click', isTwoCards);
 		boardGame.appendChild(newElement);
 	}
 };
 
-createrCards(4);
+function isTwoCards() {
+	cardsInPlay.push(this.getAttribute('data-card'));
+
+	if (cardsInPlay.length === 2) {
+
+    // pass the cardsInPlay as an argument to the isMatch function
+    isMatch(cardsInPlay);
+
+    // clear cards in play array for your next try
+    cardsInPlay = [];
+
+  }
+}
+
+createrCards(cards);
+
+
